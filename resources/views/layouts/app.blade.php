@@ -1,202 +1,172 @@
+
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Accueil')</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <style>
-    /* Réinitialisation de la navbar */
-    .navbar {
-        background-color: #007bff; /* Bleu primaire */
-        box-shadow: 0 2px 4px rgba(0,0,0,.1); /* Ombre subtile */
-    }
-    .navbar .container-fluid {
-        padding-right: 15px;
-        padding-left: 15px;
-    }
-    .navbar-brand img {
-        height: 60px; /* Ajustez selon la taille de votre logo */
-    }
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    /* Liens de la navbar */
-    .navbar-light .navbar-nav .nav-link {
-        color: #ffffff; /* Blanc pour le texte */
-        margin-left: 10px; /* Espace entre les liens */
-        margin-right: 10px;
-        transition: color 0.3s ease-in-out;
-    }
+  <title>@yield('title', 'Accueil')</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+  <!-- Favicons -->
 
-    /* Hover sur les liens */
-    .navbar-light .navbar-nav .nav-link:hover {
-        color: #dfe6e9; /* Blanc légèrement atténué */
-    }
+  <link rel="icon" type="image/png" href="{{ asset('path/to/your/favicon.png') }}">
 
-    /* Dropdowns */
-    .navbar-light .navbar-nav .nav-item.dropdown .nav-link {
-        color: #ffffff;
-    }
-    
-    /* Style du dropdown */
-    .navbar-light .navbar-nav .nav-item.dropdown .dropdown-menu {
-        background-color: #0056b3; /* Bleu plus foncé */
-        border: none; /* Supprime la bordure */
-    }
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 
-    /* Éléments du dropdown */
-    .navbar-light .navbar-nav .nav-item.dropdown .dropdown-menu .dropdown-item {
-        color: #ffffff; /* Blanc pour le texte */
-        transition: background-color 0.3s ease-in-out;
-    }
-    
-    /* Hover sur les éléments du dropdown */
-    .navbar-light .navbar-nav .nav-item.dropdown .dropdown-menu .dropdown-item:hover {
-        background-color: #003d70; /* Bleu encore plus foncé */
-    }
+  <!-- Vendor CSS Files -->
+  
+  <link href="{{ asset('vendor/animate.css/animate.min.css') }} " rel="stylesheet">
+  <link href="{{ asset('vendor/aos/aos.css') }}" rel="stylesheet">
+  <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+  <link href="{{ asset('vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+  <link href="{{ asset('vendor/boxicons/css/boxicons.min.css') }} " rel="stylesheet">
+  <link href="{{ asset('vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
+  <link href="{{ asset('vendor/remixicon/remixicon.css') }}" rel="stylesheet">
+  <link href="{{ asset('vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
 
-    /* Comportement au survol pour le dropdown */
-    .navbar-nav .nav-item.dropdown:hover .dropdown-menu {
-        display: block;
-    }
+  <!-- Template Main CSS File -->
+  <link href="{{ asset('css/style.css') }}" rel="stylesheet">
 
-   .custom-navbar {
-    background-color: #007bff; /* Couleur de fond de la navbar */
-    /* Autres styles de navbar */
-}
-
-.nav-items {
-    list-style-type: none;
-    /* Autres styles de liste */
-}
-
-.nav-item {
-    position: relative; /* Pour positionner le dropdown */
-    /* Autres styles de l'item */
-}
-
-.nav-item a {
-    color: white; /* Couleur des liens */
-    text-decoration: none;
-    /* Autres styles des liens */
-}
-
-.dropdown-menu {
-    display: none;
-    position: absolute; /* Positionnement du dropdown */
-    background-color: #0056b3; /* Fond du dropdown */
-    /* Autres styles du dropdown */
-}
-
-.nav-item:hover .dropdown-menu {
-    display: block; /* Affiche le dropdown au survol */
-}
-.dropdown-item:hover{
-    background-color:#0056b3;
-}
-/* Centre les éléments de la navbar */
-.navbar-collapse {
-    justify-content: center; /* Centre les éléments horizontalement dans le conteneur */
-}
-
-/* Assure que les éléments de la navbar sont centrés et prennent la largeur appropriée */
-.navbar-nav {
-    flex-direction: row;
-    align-items: center;
-    width: 100%; /* Prend toute la largeur pour mieux contrôler le centrage */
-    justify-content: center; /* Centre les éléments à l'intérieur de la liste */
-}
-
-.nav-item {
-    margin: 0 10px; /* Ajoute de l'espace entre les éléments */
-}
-
-.navbar-brand {
-    position: absolute; /* Permet de positionner le logo indépendamment des autres éléments */
-    left: 10%;
-    transform: translateX(-50%); /* Centre le logo exactement au milieu */
-    padding: 0; /* Retire le padding par défaut pour un centrage précis */
-}
-
-</style>
- 
+  <!-- =======================================================
+  * Template Name: Company
+  * Template URL: https://bootstrapmade.com/company-free-html-bootstrap-template/
+  * Updated: Mar 17 2024 with Bootstrap v5.3.3
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+  
 </head>
+
 <body>
-    
-    <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="{{ route('layouts.app') }}">
-                <img src="{{ asset('image/logo_ibiscsaclay.png') }}" alt="IBISC Logo">
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                <ul class="navbar-nav">
-                    <li class="nav-item ">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Plateforme terrestre
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            @foreach($projetsTerrestres as $projet)
-                                <li><a class="dropdown-item" href="{{ route('projets.show', $projet->id) }}">{{ $projet->nom }}</a></li>
-                            @endforeach
-                        </ul>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Plateforme drone
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            @foreach($projetsDrones as $projet)
-                                <li><a class="dropdown-item" href="{{ route('projets.show', $projet->id) }}">{{ $projet->nom }}</a></li>
-                            @endforeach
-                        </ul
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('equipements.index') }}">Liste des matériels</a>
-                    </li>
-                    
-                    @if(auth()->check() && auth()->user()->role === 'admin')
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('projets.index') }}">Liste des projets</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('equipements.create') }}">Ajouter un équipement</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('projets.create') }}">Créer un projet</a>
-                        </li>
-                    @endif
-                    @auth
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('reservations.index') }}">Reservations</a>
-                    </li>
-                    @endauth
-                    @if(auth()->guest())
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('login') }}">Connexion</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('register') }}">Inscription</a>
-                    </li>
-                @else
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Déconnexion</a>
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                            @csrf
-                        </form>
-                    </li>
-                @endif
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top">
+    <div class="container d-flex align-items-center">
+    <h1 class="logo me-auto"><a href="{{ route('dashboard') }}" class="logo me-auto me-lg-0">
+        <img src="{{ asset('img/logoibiscsaclay.png') }}" alt="IBISC Logo" class="img-fluid">
+    </a></h1>
+        
+      <nav id="navbar" class="navbar order-last order-lg-0">
+
+        <ul>
+          <li><a href="{{ route('dashboard') }}" class="active">Accueil</a></li>
+            
+            <li class="dropdown">
+                <a href="#"><span>Plateformes</span> <i class="bi bi-chevron-down"></i></a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <li class="dropdown"><a href="#"><span> Plateforme terrestre</span> <i class="bi bi-chevron-right"></i></a>
+                        <ul class="dropdown-menu">
+                  @foreach($projetsTerrestres as $projet)
+                    <li><a href="{{ route('projets.show', $projet->id) }}">{{ $projet->nom }}</a></li>
+                  @endforeach
                 </ul>
+              </li>
+             <li class="dropdown"><a href="#"><span> Plateforme drone</span> <i class="bi bi-chevron-right"></i></a>
+                        <ul class="dropdown-menu">
+                  @foreach($projetsDrones as $projet)
+                    <li><a href="{{ route('projets.show', $projet->id) }}">{{ $projet->nom }}</a></li>
+                  @endforeach
+                </ul>
+              </li>
+            </ul>
+            </li>
+
+          <li><a href="{{route('equipements.index')}}">Équipements</a></li>
+          <li><a href="{{ route('contact') }}">Contact</a></li>
+          @auth
+            <li><a href="{{route('reservations.index')}}">Réservations</a></li>
+             
+
+          @endauth
+          @if(auth()->check() && auth()->user()->role === 'admin')
+          <li class="dropdown">
+            <a href="#"><span>Admin</span> <i class="bi bi-chevron-down"></i></a>
+            <ul class="dropdown-menu">
+
+              <a href="{{ route('users.list') }}">Liste des utilisateurs</a>
+
+              <li><a href="{{route('projets.index')}}">Projets</a></li>
+              <li><a href="{{route('equipements.create')}}">Ajouter un équipement</a></li>
+              <li><a href="{{route('projets.create')}}">Créer un projet</a></li>
+            </ul>
+          </li>
+          @endif
+          @if(auth()->guest())
+            <li><a href="{{route('login')}}">Connexion</a></li>
+            <li><a href="{{route('register')}}">Inscription</a></li>
+          @else
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Déconnexion</a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
+            </li>
+          @endif
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+
+      <div class="header-social-links d-flex">
+        <a href="https://twitter.com/IbiscEvry" class="twitter"><i class="bu bi-twitter"></i></a>
+        <a href="https://www.youtube.com/channel/UCQ3DVPgSlQ-lrHjX9aO1sZQ" class="youtube"><i class="bu bi-youtube"></i></a>
+        <a href="https://www.linkedin.com/company/laboratoire-ibisc" class="linkedin"><i class="bu bi-linkedin"></i></a>
+      </div>
+
+    </div>
+  </header><!-- End Header -->
+   @yield('content')
+</body>
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer">
+
+    <div class="footer-top">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 footer-contact text-center">
+                <h3>Le Laboratoire IBISC (Informatique, Bioinformatique, Systèmes Complexes EA 4526)</h3>
+                <p>
+                    34 Rue du Pelvoux, <br>
+                    91080 Évry-Courcouronnes<br>
+                    France <br><br>
+                    <strong style = "color:white;">Tél :</strong> 01 69 47 75 51<br>
+                    <strong style = "color:white;">Email :</strong> hocine.yakoubi@univ-evry.fr - said.mammar@univ-evry.fr<br>
+                </p>
             </div>
         </div>
-    </nav>
-
-    <div class="container mt-4">
-        @yield('content')
     </div>
+</div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+
+    <div class="container d-md-flex py-4">
+
+      <div class="me-md-auto text-center text-md-start">
+        <div class="copyright">
+         Tous droits réservés <strong>©IBISC</strong> <a href="https://www.ibisc.univ-evry.fr/mentions-legales/">  | Mentions légales </a>
+        </div>
+        <div class="credits">
+         Disigné par <a href="https://nassimug.github.io/portfolio/">Nassim MADI</a>
+        </div>
+      </div>
+      <div class="social-links text-center text-md-right pt-3 pt-md-0">
+        <a href="https://twitter.com/IbiscEvry" class="twitter"><i class="bx bxl-twitter"></i></a>
+        <a href="https://www.youtube.com/channel/UCQ3DVPgSlQ-lrHjX9aO1sZQ" class="facebook"><i class="bx bxl-youtube"></i></a>
+        <a href="https://www.linkedin.com/company/laboratoire-ibisc" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+      </div>
+    </div>
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  </footer><!-- End Footer -->
+
+
+  
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<style>
+  
+</style>
 </html>

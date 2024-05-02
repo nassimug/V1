@@ -1,19 +1,36 @@
 @extends('layouts.app')
 
 @section('content')
+<!-- ======= Breadcrumbs ======= -->
+<section id="breadcrumbs" class="breadcrumbs">
+    <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+            <h2>Details de la réservation : <strong>{{ $reservation->equipement->nom }}</strong> pour <strong>{{ $reservation->nom }} {{ $reservation->prenom}}</strong></h2>
+            <ol>
+                <li><a href="{{ route('dashboard') }}">Accueil</a></li>
+                <li>Réservations</li>
+            </ol>
+        </div>
+
+    </div>
+</section><!-- End Breadcrumbs -->
+
 <div class="container">
-    <h1>Details de la réservation </h1>
     <div class="card">
         <div class="card-header">
-            Réservation de l'équipement: {{ $reservation->equipement->nom }}
+            Réservation de l'équipement: <strong>{{ $reservation->equipement->nom }}</strong>
         </div>
         <div class="card-body">
-            <p>Nom: {{ $reservation->nom }}</p>
-            <p>Prénom: {{ $reservation->prenom}}</p>
-            <p>Email: {{ $reservation->email }}</p>
-            <p>Date d'emprunt: {{ $formattedDateDebut }}</p> <!-- Utilisation de la date formatée -->
-            <p>Date de réstitution: {{ $formattedDateFin }}</p> <!-- Utilisation de la date formatée -->
+            <p><strong>Nom: </strong>{{ $reservation->nom }}</p>
+            <p><strong>Prénom:</strong> {{ $reservation->prenom}}</p>
+            <p><strong>Email:</strong> {{ $reservation->email }}</p>
+            <p><strong>Date d'emprunt:</strong> {{ $formattedDateDebut }}</p> <!-- Utilisation de la date formatée -->
+            <p><strong>Date de réstitution:</strong> {{ $formattedDateFin }}</p> <!-- Utilisation de la date formatée -->
+            <strong>Commentaire:</strong>
+                {{ $reservation->commentaire }}
         </div>
     </div>
 </div>
+
 @endsection

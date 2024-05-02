@@ -1,42 +1,26 @@
 @extends('layouts.app')
 
 @section('content')
+<!-- ======= Breadcrumbs ======= -->
+<section id="breadcrumbs" class="breadcrumbs">
+    <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+            <h2>Réserver l'équipement : <strong>{{ $equipement->nom }}</strong></h2>
+            <ol>
+                <li><a href="{{ route('dashboard') }}">Accueil</a></li>
+                <li>Équipements</li>
+                <li>{{ $equipement->nom }}</li>
+            </ol>
+        </div>
+
+    </div>
+</section><!-- End Breadcrumbs -->
 <div class="container">
-    <h1>Créer une Réservation</h1>
+   
     <form method="POST" action="{{ route('reservations.store') }}">
         @csrf
-
-        <div class="mb-3">
-            <label for="nom" class="form-label">Nom</label>
-            <input type="text" class="form-control @error('nom') is-invalid @enderror" id="nom" name="nom" value="{{ old('nom') }}" required>
-            @error('nom')
-                <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
-        </div>
-
-        <div class="mb-3">
-            <label for="prenom" class="form-label">Prénom</label>
-            <input type="text" class="form-control @error('prenom') is-invalid @enderror" id="prenom" name="prenom" value="{{ old('prenom') }}" required>
-            @error('prenom')
-                <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
-        </div>
-
-        <div class="mb-3">
-            <label for="email" class="form-label">Email</label>
-            <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email') }}" required>
-            @error('email')
-                <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
-        </div>
-
-        <div class="mb-3">
-            <label for="identifiant" class="form-label">Identifiant</label>
-            <input type="text" class="form-control @error('identifiant') is-invalid @enderror" id="identifiant" name="identifiant" value="{{ old('identifiant') }}" required>
-            @error('identifiant')
-                <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
-        </div>
+        <input type="hidden" name="equipement_id" value="{{ $equipement->id }}">
 
         <div class="mb-3">
             <label for="date_debut" class="form-label">Date de début</label>
@@ -54,19 +38,8 @@
             @enderror
         </div>
 
-        <div class="mb-3">
-            <label for="equipement_id" class="form-label">Équipement</label>
-            <select class="form-select @error('equipement_id') is-invalid @enderror" id="equipement_id" name="equipement_id" required>
-                @foreach($equipements as $equipement)
-                    <option value="{{ $equipement->id }}">{{ $equipement->nom }}</option>
-                @endforeach
-            </select>
-            @error('equipement_id')
-                <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
-        </div>
-
-        <button type="submit" class="btn btn-primary">Soumettre</button>
+        <button type="submit" class="btn btn-primary">Réserver</button>
     </form>
 </div>
+
 @endsection

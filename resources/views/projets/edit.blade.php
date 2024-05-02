@@ -2,8 +2,22 @@
 @extends('layouts.app')
 
 @section('content')
+<!-- ======= Breadcrumbs ======= -->
+<section id="breadcrumbs" class="breadcrumbs">
+    <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+            <h2>Modifier le Projet : <strong>{{ $projet->nom }}</strong></h2>
+            <ol>
+                <li><a href="{{ route('dashboard') }}">Accueil</a></li>
+                <li>Admin</li>
+            </ol>
+        </div>
+
+    </div>
+</section><!-- End Breadcrumbs -->
 <div class="container">
-    <h1>Modifier le Projet : {{ $projet->nom }}</h1>
+   
     <form method="POST" action="{{ route('projets.update', $projet->id) }}">
         @csrf
         @method('PUT') <!-- Important pour spécifier que c'est une requête PUT -->
@@ -36,6 +50,7 @@
         <button type="submit" class="btn btn-primary">Modifier</button>
     </form>
 </div>
+
 <!-- Script TinyMCE -->
 <x-head.tinymce-config/>
 @endsection

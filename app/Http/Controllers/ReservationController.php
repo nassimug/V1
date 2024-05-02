@@ -9,39 +9,60 @@ use Carbon\Carbon;
 class ReservationController extends Controller
 {
     public function index()
-    {
-        if (auth()->user()->role === 'admin') {
-            $reservations = Reservation::with('equipement')->get(); // Admin peut voir toutes les réservations
-        } else {
-            $reservations = Reservation::where('user_id', auth()->id())->with('equipement')->get(); // Les utilisateurs ne voient que leurs réservations
-        }
-        return view('reservations.index', compact('reservations'));
+{
+    if (auth()->user()->role === 'admin') {
+        // Admin peut voir toutes les réservations non traitées
+        $reservations = Reservation::with('equipement')
+            ->where('statut', '!=', 'accepted')
+            ->where('statut', '!=', 'rejected')
+            ->get();
+    } else {
+        // Les utilisateurs ne voient que leurs réservations non traitées
+        $reservations = Reservation::where('user_id', auth()->id())
+            ->where('statut', '!=', 'accepted')
+            ->where('statut', '!=', 'rejected')
+            ->with('equipement')
+            ->get();
     }
+    return view('reservations.index', compact('reservations'));
+}
 
 
-    public function create()
+
+    public function create($equipementId)
     {
-        $equipements = Equipement::all();
-        return view('reservations.create', compact('equipements'));
+        $equipement = Equipement::findOrFail($equipementId); // Assurez-vous que l'équipement existe
+        return view('reservations.create', compact('equipement'));
     }
+
 
     public function store(Request $request)
 {
-    $request->validate([
-        'date_debut' => 'required|date',
-        'date_fin' => 'required|date',
+    // Règles de validation
+    $rules = [
+        'date_debut' => 'required|date|after_or_equal:today',
+        'date_fin' => 'required|date|after_or_equal:date_debut',
         'equipement_id' => 'required|exists:equipements,id'
-    ]);
+    ];
+
+    // Messages d'erreur personnalisés
+    $messages = [
+        'date_fin.after_or_equal' => 'La date de fin doit être postérieure ou égale à la date de début.',
+        'date_debut.after_or_equal' => 'La date de début doit être aujourd’hui ou une date future.',
+    ];
+
+    // Exécution de la validation
+    $request->validate($rules, $messages);
 
     // Récupération des informations de l'utilisateur connecté
     $user = auth()->user();
 
-    // Création de la réservation avec les informations de l'utilisateur et les dates fournies
+    // Création de la réservation
     Reservation::create([
         'nom' => $user->nom,
         'prenom' => $user->prenom,
         'email' => $user->email,
-        'identifiant' => $user->login, // Assurez-vous que cela correspond à la colonne appropriée dans votre DB
+        'identifiant' => $user->login,
         'date_debut' => $request->date_debut,
         'date_fin' => $request->date_fin,
         'equipement_id' => $request->equipement_id,
@@ -50,6 +71,8 @@ class ReservationController extends Controller
 
     return redirect()->route('reservations.index')->with('success', 'Réservation créée avec succès.');
 }
+
+
 
 
 
@@ -79,5 +102,56 @@ class ReservationController extends Controller
         $reservation->delete();
         return back()->with('success', 'Reservation deleted successfully.');
     }
+
+    public function accept(Request $request, Reservation $reservation)
+    {
+        // Vérifiez si l'utilisateur est un administrateur
+        if (auth()->user()->role !== 'admin') {
+        abort(403); // Accès refusé
+        }
+        // Mettez à jour l'état de la réservation pour marquer comme acceptée
+        $reservation->update([
+        'statut' => 'accepted',
+        'commentaire' => $request->commentaire, 
+        ]);
+        // Redirigez l'utilisateur vers la page de détails de la réservation
+        return redirect()->route('reservations.index', $reservation->id)->with('success',
+        'Réservation acceptée avec succès.');
+        }
+
+    public function reject(Request $request, Reservation $reservation)
+    {
+
+        // Vérifiez si l'utilisateur est un administrateur
+        if (auth()->user()->role !== 'admin') {
+        abort(403); // Accès refusé
+        }
+        // Mettez à jour l'état de la réservation pour marquer comme refusée
+        $reservation->update([
+        'statut' => 'rejected',
+        'commentaire' => $request->commentaire, 
+        ]);
+        // Redirigez l'utilisateur vers la page de détails de la réservation
+        return redirect()->route('reservations.index', $reservation->id)->with('success',
+        'Réservation refusée avec succès.');
+    }
+
+    public function showAcceptForm(Reservation $reservation)
+{
+    if (auth()->user()->role !== 'admin') {
+        abort(403);
+    }
+    return view('reservations.accept', compact('reservation'));
+}
+
+public function showRejectForm(Reservation $reservation)
+{
+    if (auth()->user()->role !== 'admin') {
+        abort(403);
+    }
+    return view('reservations.reject', compact('reservation'));
+}
+
+
 
 }

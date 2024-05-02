@@ -4,9 +4,22 @@
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
+<!-- ======= Breadcrumbs ======= -->
+<section id="breadcrumbs" class="breadcrumbs">
+    <div class="container">
 
+        <div class="d-flex justify-content-between align-items-center">
+            <h2>Modifier l'Équipement : <strong>{{ $equipement->nom }}</strong></h2>
+            <ol>
+                <li><a href="{{ route('dashboard') }}">Accueil</a></li>
+                <li>Équipements</li>
+                <li>{{ $equipement->nom }}</li>
+            </ol>
+        </div>
+
+    </div>
+</section><!-- End Breadcrumbs -->
 <div class="container">
-    <h1>Modifier l'Équipement : {{ $equipement->nom }}</h1>
     <form method="POST" action="{{ route('equipements.update', $equipement->id) }}" enctype="multipart/form-data">
         @csrf
         @method('PUT')

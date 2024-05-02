@@ -1,6 +1,21 @@
 @extends('layouts.app')
 
 @section('content')
+<!-- ======= Breadcrumbs ======= -->
+<section id="breadcrumbs" class="breadcrumbs">
+    <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+            <h2>Ajouter un équipement</h2>
+            <ol>
+                <li><a href="{{ route('dashboard') }}">Accueil</a></li>
+                <li>Admin</li>
+                <li>Ajouter un équipement</li>
+            </ol>
+        </div>
+
+    </div>
+</section><!-- End Breadcrumbs -->
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-10">
@@ -48,11 +63,7 @@
 </div>
 
 <style>
-    /* Styles généraux pour la page */
-.container {
-    margin-top: 50px;
-}
-
+ 
 .card {
     border-radius: 8px;
     border: none;
@@ -97,6 +108,8 @@
         margin: 10px;
     }
 }
+
+
 
 </style>
 <!-- Script TinyMCE -->

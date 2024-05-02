@@ -1,8 +1,23 @@
 @extends('layouts.app')
 
 @section('content')
+<!-- ======= Breadcrumbs ======= -->
+<section id="breadcrumbs" class="breadcrumbs">
+    <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+            <h2>Liste des projets</h2>
+            <ol>
+                <li><a href="{{ route('dashboard') }}">Accueil</a></li>
+                <li>Admin</li>
+                <li>Projets</li>
+            </ol>
+        </div>
+
+    </div>
+</section><!-- End Breadcrumbs -->
 <div class="container">
-    <h1>Liste des Projets</h1>
+   
     @foreach ($projets as $projet)
         <div class="card mb-3">
             <div class="card-body d-flex justify-content-between align-items-center">
@@ -89,5 +104,7 @@
             flex-direction: column; /* Empile les éléments verticalement sur les petits écrans */
         }
     }
+    
+ 
 </style>
 @endsection
